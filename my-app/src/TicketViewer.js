@@ -67,7 +67,7 @@ function TicketViewer() {
             {isLoading ? (<p>Loading</p>) : (<p></p>)}
             {isError ? (<p>Error: {error.message}</p>) : (<p></p>)}
             {data ? displayData() : (<p></p>)}
-            <button onClick={() => {setWhich('/gettickets'); setEnable(true);}}>
+            <button data-testid="gettickets" onClick={() => {setWhich('/gettickets'); setEnable(true);}}>
                 Fetch Data
             </button>
         </BigDiv>

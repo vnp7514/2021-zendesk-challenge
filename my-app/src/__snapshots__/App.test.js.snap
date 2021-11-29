@@ -8,7 +8,9 @@ exports[`Application starts with 1 button 1`] = `
     <p />
     <p />
     <p />
-    <button>
+    <button
+      data-testid="gettickets"
+    >
       Fetch Data
     </button>
   </div>
