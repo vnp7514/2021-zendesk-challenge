@@ -1,22 +1,27 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import styled from 'styled-components';
 import Ticket from './Ticket';
 
+const BigDiv = styled.div`
+    text-align: center;
+`;
+
+
 function TicketViewer() {
+    // Decide whether to run the query or not. Default is not to run the query.
     const [enable, setEnable] = useState(false);
+    // Determine which page we need to look at. Default is the first page.
     const [which, setWhich] = useState('/gettickets');
     const {isLoading, isError, data, error} = useQuery('tickets', fetchTickets, {
         enabled: enable,
         initialData: null
     });
 
-    console.log(which);
+    // The function that will be called to fetch the data from Node.js
     async function fetchTickets(){
         setEnable(false);
-        // The long string after Basic is the Base64 encoded string 
-        //   that represents my username and the API token
-        var response;
-        response = await fetch(which);
+        const response = await fetch(which);
         if (response.ok) {
             const result = response.json();
             return result;
@@ -25,15 +30,17 @@ function TicketViewer() {
         }
     }
 
-    
+    // Handling displaying data
     function displayData(){
-        console.log(data);
         if (data.error) {
             return (<p>Error: {data.error}</p>);
         } else{
+            // Render the displaying component for each ticket
             const listTickets = data.tickets.map((ticket) => 
                 <Ticket ticket={ticket} />
             );
+            // Always display the tickets. If there is a link of the next page, the button "Next Page" will show up.
+            // If there is a link for the previous page, the button "Previous Page" will show up.
             return (
                 <div>
                     {listTickets}
@@ -56,19 +63,14 @@ function TicketViewer() {
 
 
     return (
-        <div>
+        <BigDiv>
             {isLoading ? (<p>Loading</p>) : (<p></p>)}
             {isError ? (<p>Error: {error.message}</p>) : (<p></p>)}
             {data ? displayData() : (<p></p>)}
             <button onClick={() => {setWhich('/gettickets'); setEnable(true);}}>
                 Fetch Data
             </button>
-        </div>
-        // <ul>
-        //   {data.map(todo => (
-        //     <li key={todo.id}>{todo.title}</li>
-        //   ))}
-        // </ul>
+        </BigDiv>
       );
 }
 

@@ -13,6 +13,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "nodemon": "^2.0.15",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "styled-components": "^5.3.3"
   }
 }
