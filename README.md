@@ -17,7 +17,7 @@ This will update the directory and install all necessary modules.
 
 This will runs the backend server on port 8080
 
-Then go to the my-app directory:
+Then open another terminal and go to the my-app directory:
 
 ### `cd my-app`
 
