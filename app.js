@@ -1,10 +1,10 @@
 const express = require("express");
 const request = require('request');
 const API_PORT = 8080;
-// The email to access the API
-const email = "vnp7514@rit.edu";
-// The API token to access the API
-const APItoken = "fZJsrbGLyz1Pu2b2mLEEAwjrNfRUP6AZ5qgcoqUp";
+// The email to access the API. ADD HERE
+const email = "";
+// The API token to access the API. ADD HERE
+const APItoken = "";
 const emailAPI = email + "/token:" + APItoken;
 const encodedString = btoa(emailAPI);
 
