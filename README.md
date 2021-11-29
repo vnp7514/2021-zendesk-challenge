@@ -1,7 +1,12 @@
 This project has Node.js as its backend to handle API calls. React.js is responsible for frontend.
 
 ### Before running anything
-In the app.js file, add the email and the API token that are required to access the API. These fields are marked with "ADD HERE"
+In the app.js file, add the email and the API token that are required to access the API. These fields are marked with "ADD HERE". Please also change the domain in the both the url link in app.js: 
+
+https://zccvnp7514.zendesk.com
+
+Please change zccvnp7514 into your domain.
+
 
 
 ### To run the program
