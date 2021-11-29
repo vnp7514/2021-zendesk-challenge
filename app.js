@@ -1,14 +1,14 @@
 const express = require("express");
 const request = require('request');
 const API_PORT = 8080;
+// The email to access the API
 const email = "vnp7514@rit.edu";
+// The API token to access the API
 const APItoken = "fZJsrbGLyz1Pu2b2mLEEAwjrNfRUP6AZ5qgcoqUp";
 const emailAPI = email + "/token:" + APItoken;
 const encodedString = btoa(emailAPI);
 
-var next = "";
-var previous = "";
-
+// Used for making a GET request
 const options = {
   'method': 'GET',
   'url': 'https://zccvnp7514.zendesk.com/api/v2/tickets.json?page[size]=25',
@@ -21,24 +21,19 @@ const options = {
 
 const app = express();
 
+// Fetch the tickets for the first time.
 app.get("/gettickets", (req, res) => {
     request(options, function (error, response) {
         if (error) {
             throw new Error(error);
         } else {
-            if (response.body.links) {
-                previous = response.body.links.prev;
-                next = response.body.links.next; 
-            }
-            console.log(previous);
-            console.log(next);
             res.send(response.body);
         }
       });
- });
+});
  
+// Used to know which url to fetch from for the next page or the previous page
 app.get('/get/:url', (req, res) => {
-    console.log(req.params);
     const link = {
         'method': 'GET',
         'url': 'https://zccvnp7514.zendesk.com/api/v2/tickets.json?' + atob(req.params.url),
