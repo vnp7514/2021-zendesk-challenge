@@ -1,20 +1,25 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import Ticket from './Ticket';
 
 function TicketViewer() {
     const [enable, setEnable] = useState(false);
-    const [initialData, setInitialData] = useState(null);
+    const [which, setWhich] = useState('/gettickets');
     const {isLoading, isError, data, error} = useQuery('tickets', fetchTickets, {
-        enabled: enable
+        enabled: enable,
+        initialData: null
     });
 
+    console.log(which);
     async function fetchTickets(){
         setEnable(false);
         // The long string after Basic is the Base64 encoded string 
         //   that represents my username and the API token
-        const response = await fetch('/gettickets');
+        var response;
+        response = await fetch(which);
         if (response.ok) {
-            return response.json();
+            const result = response.json();
+            return result;
         } else {
             throw new Error("Error fetching tickets.");
         }
@@ -22,10 +27,30 @@ function TicketViewer() {
 
     
     function displayData(){
+        console.log(data);
         if (data.error) {
             return (<p>Error: {data.error}</p>);
         } else{
-            return (<p>We have data</p>);
+            const listTickets = data.tickets.map((ticket) => 
+                <Ticket ticket={ticket} />
+            );
+            return (
+                <div>
+                    {listTickets}
+                    {(data.links.next) ? (
+                        <button onClick={() => {setWhich('/get/'+btoa(data.links.next.split('?')[1])); setEnable(true);}}>
+                            Next Page
+                        </button>) :
+                        <p></p>
+                    }
+                    {(data.links.prev) ? (
+                        <button onClick={() => {setWhich('/get/'+btoa(data.links.prev.split('?')[1])); setEnable(true);}}>
+                            Previous Page
+                        </button>) :
+                        <p></p>
+                    }
+                </div>
+            );
         }
     }
 
@@ -35,7 +60,7 @@ function TicketViewer() {
             {isLoading ? (<p>Loading</p>) : (<p></p>)}
             {isError ? (<p>Error: {error.message}</p>) : (<p></p>)}
             {data ? displayData() : (<p></p>)}
-            <button onClick={() => setEnable(true)}>
+            <button onClick={() => {setWhich('/gettickets'); setEnable(true);}}>
                 Fetch Data
             </button>
         </div>
