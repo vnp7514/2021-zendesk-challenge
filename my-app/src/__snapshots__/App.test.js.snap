@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Application starts with 1 button 1`] = `
+<div>
+  <div
+    class="sc-jRQBWg fVRA-DT"
+  >
+    <p />
+    <p />
+    <p />
+    <button>
+      Fetch Data
+    </button>
+  </div>
+</div>
+`;

@@ -44,7 +44,7 @@ function Ticket(props){
             <div>
                 {(moreInfo) ? JSON.stringify(props.ticket, null, 4) : ""}
             </div>
-            <Button onClick={()=>setMoreInfo(!moreInfo)}>
+            <Button data-testid="ticket" onClick={()=>setMoreInfo(!moreInfo) }>
                 {moreInfo ? "Less information" : "More information"}
             </Button>
         </Div4>
